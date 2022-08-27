@@ -4,6 +4,7 @@
   "package": "dontherdme.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "invoker.MusicDiscItemMixin"
   ],
   "client": [
   ],

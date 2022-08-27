@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "dont_herd_me:item/music_disc_sheep"
+  }
+}
