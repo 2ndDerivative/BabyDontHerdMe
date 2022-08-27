@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "dont_herd_me",
+  "version": "${version}",
+
+  "name": "Baby don't her me",
+  "description": "Introduces Herding and better dogs.",
+  "authors": [
+    "2ndDerivative"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/dontherdme/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dontherdme.Entrypoint"
+    ]
+  },
+  "mixins": [
+    "dontherdme.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.6",
+    "fabric": "*",
+    "minecraft": "~1.19",
+    "java": ">=17"
+  },
+  "suggests": {
+  }
+}
