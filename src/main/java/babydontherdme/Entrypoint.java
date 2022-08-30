@@ -1,14 +1,14 @@
-package dontherdme;
+package babydontherdme;
 
-import dontherdme.item.ModItems;
-import dontherdme.sound.ModSoundEvents;
+import babydontherdme.item.ModItems;
+import babydontherdme.sound.ModSoundEvents;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Entrypoint implements ModInitializer {
-	public static final String MODID = "dont_herd_me";
+	public static final String MODID = "baby_dont_herd_me";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
 	@Override

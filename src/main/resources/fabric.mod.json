@@ -14,16 +14,16 @@
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/dontherdme/icon.png",
+  "icon": "assets/baby_dont_herd_me/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "dontherdme.Entrypoint"
+      "babydontherdme.Entrypoint"
     ]
   },
   "mixins": [
-    "dontherdme.mixins.json"
+    "babydontherdme.mixins.json"
   ],
 
   "depends": {

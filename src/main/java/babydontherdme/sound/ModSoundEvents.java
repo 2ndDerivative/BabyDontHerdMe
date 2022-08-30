@@ -1,7 +1,7 @@
-package dontherdme.sound;
+package babydontherdme.sound;
 
 
-import dontherdme.Entrypoint;
+import babydontherdme.Entrypoint;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.registry.Registry;
 

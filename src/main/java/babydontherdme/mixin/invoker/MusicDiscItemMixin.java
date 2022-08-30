@@ -1,4 +1,4 @@
-package dontherdme.mixin.invoker;
+package babydontherdme.mixin.invoker;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.MusicDiscItem;

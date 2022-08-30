@@ -1,8 +1,8 @@
-package dontherdme.item;
+package babydontherdme.item;
 
-import dontherdme.Entrypoint;
-import dontherdme.mixin.invoker.MusicDiscItemMixin;
-import dontherdme.sound.ModSoundEvents;
+import babydontherdme.Entrypoint;
+import babydontherdme.mixin.invoker.MusicDiscItemMixin;
+import babydontherdme.sound.ModSoundEvents;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;

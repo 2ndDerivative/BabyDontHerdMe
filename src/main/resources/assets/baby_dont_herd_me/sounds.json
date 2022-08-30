@@ -2,7 +2,7 @@
     "music_disc_sheep": {
         "sounds": [
             {
-                "name": "dont_herd_me:music_disc/beep_beep",
+                "name": "baby_dont_herd_me:music_disc/beep_beep",
                 "stream": true
             }
         ]
