@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:husbandry/tame_an_animal",
+  "criteria": {
+    "used_horn": {
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:goat_horn"
+          }
+        ]
+      },
+      "trigger": "minecraft:using_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.husbandry.herd_with_wolf.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:goat_horn"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.husbandry.herd_with_wolf.title"
+    }
+  },
+  "requirements": [
+    [
+      "used_horn"
+    ]
+  ]
+}
