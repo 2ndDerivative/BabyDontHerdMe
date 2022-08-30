@@ -1,6 +1,6 @@
 package babydontherdme.mixin;
 
-import babydontherdme.Herding;
+import babydontherdme.entity.ai.goal.Herding;
 import babydontherdme.item.ModItems;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -9,7 +9,12 @@ import org.spongepowered.asm.mixin.Mixin;
 public class PlayerEntityMixin implements Herding {
 
     public boolean isScary() {
-        return ((PlayerEntity)(Object)this).getMainHandStack().isOf(ModItems.CROOK);
+        return babydontherdme$holdsCrook();
+    }
+
+    private boolean babydontherdme$holdsCrook(){
+        return ((PlayerEntity)(Object)this).getMainHandStack().isOf(ModItems.CROOK) ||
+                ((PlayerEntity)(Object)this).getOffHandStack().isOf(ModItems.CROOK);
     }
 
     public void setScary(boolean scare) {

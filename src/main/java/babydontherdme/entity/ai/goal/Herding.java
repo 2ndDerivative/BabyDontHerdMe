@@ -1,4 +1,4 @@
-package babydontherdme;
+package babydontherdme.entity.ai.goal;
 
 public interface Herding {
     boolean isScary();

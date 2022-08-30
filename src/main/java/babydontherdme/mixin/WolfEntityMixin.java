@@ -1,6 +1,6 @@
 package babydontherdme.mixin;
 
-import babydontherdme.Herding;
+import babydontherdme.entity.ai.goal.Herding;
 import babydontherdme.access.WolfEntityMixinInterface;
 import babydontherdme.entity.ai.goal.WolfHerdingGoal;
 import net.minecraft.entity.EntityType;

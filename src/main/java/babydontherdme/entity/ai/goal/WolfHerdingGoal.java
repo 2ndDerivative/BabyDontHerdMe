@@ -1,6 +1,5 @@
 package babydontherdme.entity.ai.goal;
 
-import babydontherdme.Herding;
 import babydontherdme.access.WolfEntityMixinInterface;
 import babydontherdme.math.SheepHelper;
 import net.minecraft.entity.ai.goal.Goal;
@@ -25,7 +24,7 @@ public class WolfHerdingGoal extends Goal {
     private SheepEntity outer1;
     private SheepEntity outer2;
     private int aquiringNewTicks;
-    private double ACCEPTABLE_SPREAD = 1.0;
+    private double ACCEPTABLE_SPREAD = 0.8;
 
     private static final double VISION_RANGE = 30.0;
     private static final double herdingSpeed = 1.2;
@@ -83,7 +82,7 @@ public class WolfHerdingGoal extends Goal {
             //actual movement
             Vec3d target = dog.getPos();
             double speed = herdingSpeed;
-            if(circleRadius > ACCEPTABLE_SPREAD){
+            if(circleRadius > ACCEPTABLE_SPREAD*Math.sqrt(sheepList.size())){
                 if(!dogOnCircle(circleCenter, circleRadius + SPACING)){
                     ((Herding)this.dog).setScary(false);
                     target = circleCenter.add(radialUnitVector.multiply(circleRadius+SPACING));

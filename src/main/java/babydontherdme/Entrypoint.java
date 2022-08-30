@@ -24,9 +24,11 @@ import java.util.List;
 
 public class Entrypoint implements ModInitializer {
 	public static final String MODID = "baby_dont_herd_me";
-	public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
+	public static final String MODNAME = "Baby Don't Herd Me";
+	public static final Logger LOGGER = LoggerFactory.getLogger(MODNAME);
 
 	public static final Identifier WHISTLE_PACKET = identify("whistle");
+	public static final double WOLF_WHISTLE_RANGE = 50.0;
 
 	@Override
 	public void onInitialize() {
@@ -40,8 +42,7 @@ public class Entrypoint implements ModInitializer {
 					player.getWorld().playSoundFromEntity(null, player, ModSoundEvents.WHISTLE, SoundCategory.PLAYERS, 2.0f, 1.0f);
 					int simD = server.getPlayerManager().getSimulationDistance();
 					List<WolfEntity> dogs =  player.getWorld().getEntitiesByClass(WolfEntity.class,
-							new Box(player.getPos().getX()-simD,-64,player.getPos().getZ()-simD,
-									player.getPos().getX()+simD,320,player.getPos().getZ()+simD),
+							player.getBoundingBox().expand(WOLF_WHISTLE_RANGE, 10.0, WOLF_WHISTLE_RANGE),
 							(wolf)->wolf.isOwner(player));
 					for(WolfEntity dog : dogs) {
 						((WolfEntityMixinInterface) dog).setHerdingTime(0);
