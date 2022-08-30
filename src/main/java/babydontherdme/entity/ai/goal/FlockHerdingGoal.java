@@ -1,7 +1,8 @@
 package babydontherdme.entity.ai.goal;
 
-import babydontherdme.access.WolfEntityMixinInterface;
+import babydontherdme.Herding;
 import babydontherdme.math.SheepHelper;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.passive.WolfEntity;
@@ -36,10 +37,10 @@ public class FlockHerdingGoal extends Goal {
         return !findDogs().isEmpty();
     }
 
-    private List<WolfEntity> findDogs(){
-        return mob.getWorld().getEntitiesByClass(WolfEntity.class,
+    private List<LivingEntity> findDogs(){
+        return mob.getWorld().getEntitiesByClass(LivingEntity.class,
                 this.mob.getBoundingBox().expand(WOLF_VISION_RANGE, 2,WOLF_VISION_RANGE),
-                (wolf)->((WolfEntityMixinInterface)wolf).isScary());
+                (herder)->(herder instanceof Herding && ((Herding)herder).isScary()));
     }
 
     public void tick(){

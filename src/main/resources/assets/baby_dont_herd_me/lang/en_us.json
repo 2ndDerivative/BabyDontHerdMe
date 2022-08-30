@@ -1,4 +1,13 @@
 {
+    "item.baby_dont_herd_me.crook": "Crook",
     "item.baby_dont_herd_me.music_disc_sheep": "Music Disc",
-    "item.baby_dont_herd_me.music_disc_sheep.desc": "Beep Beep I'm a Sheep - LilDeuceDeuce"
+    "item.baby_dont_herd_me.music_disc_sheep.desc": "Beep Beep I'm a Sheep - LilDeuceDeuce",
+
+    "key.baby_dont_herd_me.whistle": "Whistle",
+    "category.baby_dont_herd_me.herding": "Herding",
+
+    "subtitles.baby_dont_herd_me.whistle": "Player whistles",
+
+    "advancements.husbandry.herd_with_wolf.description": "Herd 10 sheep with a dog",
+    "advancements.husbandry.herd_with_wolf.title": "Gather Around!"
 }

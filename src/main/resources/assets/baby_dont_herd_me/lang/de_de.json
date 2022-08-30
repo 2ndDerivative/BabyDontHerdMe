@@ -1,3 +1,12 @@
 {
-  "item.baby_dont_herd_me.music_disc_sheep": "Schallplatte"
+  "item.baby_dont_herd_me.crook": "Hirtenstock",
+  "item.baby_dont_herd_me.music_disc_sheep": "Schallplatte",
+
+  "key.baby_dont_herd_me.whistle": "Pfeifen",
+  "category.baby_dont_herd_me.herding": "Hut",
+
+  "subtitles.baby_dont_herd_me.whistle": "Spieler pfeift",
+
+  "advancements.husbandry.herd_with_wolf.description": "Hüte 10 Schafe mit deinem Hund",
+  "advancements.husbandry.herd_with_wolf.title": "Ihr Kinderlein kommet"
 }

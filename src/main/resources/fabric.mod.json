@@ -1,17 +1,13 @@
 {
   "schemaVersion": 1,
-  "id": "dont_herd_me",
+  "id": "baby_dont_herd_me",
   "version": "${version}",
 
-  "name": "Baby don't her me",
-  "description": "Introduces Herding and better dogs.",
+  "name": "Baby don't herd me",
+  "description": "Herd your sheep more professionally",
   "authors": [
     "2ndDerivative"
   ],
-  "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
-  },
 
   "license": "CC0-1.0",
   "icon": "assets/baby_dont_herd_me/icon.png",
@@ -20,6 +16,9 @@
   "entrypoints": {
     "main": [
       "babydontherdme.Entrypoint"
+    ],
+    "client": [
+      "babydontherdme.client.ClientEntrypoint"
     ]
   },
   "mixins": [

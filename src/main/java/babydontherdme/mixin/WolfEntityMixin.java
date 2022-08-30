@@ -1,5 +1,6 @@
 package babydontherdme.mixin;
 
+import babydontherdme.Herding;
 import babydontherdme.access.WolfEntityMixinInterface;
 import babydontherdme.entity.ai.goal.WolfHerdingGoal;
 import net.minecraft.entity.EntityType;
@@ -21,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(WolfEntity.class)
-public class WolfEntityMixin extends TameableEntity implements WolfEntityMixinInterface {
+public class WolfEntityMixin extends TameableEntity implements WolfEntityMixinInterface, Herding {
     private static final TrackedData<Integer> dontherdme$HerdingTime = DataTracker.registerData(WolfEntity.class, TrackedDataHandlerRegistry.INTEGER);
     private static final TrackedData<Boolean> dontherdme$isScary = DataTracker.registerData(WolfEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
