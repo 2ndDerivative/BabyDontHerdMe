@@ -6,5 +6,12 @@
                 "stream": true
             }
         ]
+    },
+    "whistle": {
+        "sounds": [
+            {
+                "name": "baby_dont_herd_me:player/whistle"
+            }
+        ]
     }
 }

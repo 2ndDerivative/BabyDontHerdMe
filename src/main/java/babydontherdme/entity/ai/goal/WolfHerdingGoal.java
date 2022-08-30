@@ -1,5 +1,6 @@
 package babydontherdme.entity.ai.goal;
 
+import babydontherdme.Herding;
 import babydontherdme.access.WolfEntityMixinInterface;
 import babydontherdme.math.SheepHelper;
 import net.minecraft.entity.ai.goal.Goal;
@@ -7,7 +8,6 @@ import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 
@@ -16,6 +16,10 @@ import java.util.List;
 
 
 public class WolfHerdingGoal extends Goal {
+    //TODO Co-op herding
+
+    //TODO moving herd's CoM
+
     private final WolfEntity dog;
     private List<SheepEntity> sheepList;
     private SheepEntity outer1;
@@ -43,13 +47,13 @@ public class WolfHerdingGoal extends Goal {
         this.aquiringNewTicks = checkEvery;
     }
     public void stop(){
-        ((WolfEntityMixinInterface)this.dog).setScary(false);
+        ((Herding)this.dog).setScary(false);
         this.dog.playSound(SoundEvents.ENTITY_WOLF_PANT, 1.2f, 1.0f);
     }
 
     public void tick() {
         if(this.aquiringNewTicks<=0){
-            if (!getNearbySheep(3).isEmpty() && ((WolfEntityMixinInterface)this.dog).isScary() && Random.create().nextInt(10) > 3) {
+            if (!getNearbySheep(3).isEmpty() && ((Herding)this.dog).isScary() && Random.create().nextInt(10) > 3) {
                 this.dog.playSound(SoundEvents.ENTITY_WOLF_AMBIENT, 1.2f, 1.0f);
             }
             updateSheep();
@@ -81,14 +85,14 @@ public class WolfHerdingGoal extends Goal {
             double speed = herdingSpeed;
             if(circleRadius > ACCEPTABLE_SPREAD){
                 if(!dogOnCircle(circleCenter, circleRadius + SPACING)){
-                    ((WolfEntityMixinInterface)this.dog).setScary(false);
+                    ((Herding)this.dog).setScary(false);
                     target = circleCenter.add(radialUnitVector.multiply(circleRadius+SPACING));
                 } else if(dogOnCircle(circleCenter,circleRadius + SPACING) && dogAngle < 2.0/circleRadius) {
-                    ((WolfEntityMixinInterface)this.dog).setScary(true);
+                    ((Herding)this.dog).setScary(true);
                     target = circleCenter.subtract(radialUnitVector.multiply(circleRadius + SPACING));
                     speed = herdingSpeed*0.8;
                 } else {
-                    ((WolfEntityMixinInterface)this.dog).setScary(true);
+                    ((Herding)this.dog).setScary(true);
                     boolean shouldDecreaseAngle = dogAngle < Math.PI*2/3.0;
                     target = this.dog.getPos().add(radialUnitVector.multiply(circleRadius).crossProduct(normalUnitVector.multiply(shouldDecreaseAngle ? -1.0 : 1.0)));
                 }

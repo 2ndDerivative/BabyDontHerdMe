@@ -3,7 +3,7 @@
   "id": "dont_herd_me",
   "version": "${version}",
 
-  "name": "Baby don't her me",
+  "name": "Baby don't herd me",
   "description": "Introduces Herding and better dogs.",
   "authors": [
     "2ndDerivative"
@@ -20,6 +20,9 @@
   "entrypoints": {
     "main": [
       "babydontherdme.Entrypoint"
+    ],
+    "client": [
+      "babydontherdme.client.ClientEntrypoint"
     ]
   },
   "mixins": [

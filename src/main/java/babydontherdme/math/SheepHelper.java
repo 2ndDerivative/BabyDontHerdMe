@@ -1,12 +1,13 @@
 package babydontherdme.math;
 
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.List;
 
 public class SheepHelper {
-    public static <T extends AnimalEntity> Vec3d CenterOfMass(List<T> animals){
+    public static <T extends LivingEntity> Vec3d CenterOfMass(List<T> animals){
         if(!animals.isEmpty()){
             Vec3d com = new Vec3d(0.0,0.0,0.0);
             for(T animal : animals){
