@@ -2,11 +2,13 @@ package babydontherdme.entity.ai.goal;
 
 import babydontherdme.Herding;
 import babydontherdme.access.WolfEntityMixinInterface;
+import babydontherdme.advancement.criterion.ModCriteria;
 import babydontherdme.math.SheepHelper;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.predicate.entity.EntityPredicates;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
@@ -109,6 +111,7 @@ public class WolfHerdingGoal extends Goal {
     private void updateSheep(){
         List<SheepEntity> sheep = getNearbySheep(VISION_RANGE);
         this.sheepList = sheep;
+        ModCriteria.HERDED_ANIMALS_WITH_WOLF.trigger((ServerPlayerEntity) this.dog.getOwner(), sheep.size());
         if(sheep.size() > 1){
             this.outer1 = SheepHelper.furthestAnimal(sheep);
             this.outer2 = SheepHelper.furthestFromThis(sheep, outer1);
