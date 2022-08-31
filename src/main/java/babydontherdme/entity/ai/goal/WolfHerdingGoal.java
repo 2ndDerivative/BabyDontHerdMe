@@ -1,6 +1,5 @@
 package babydontherdme.entity.ai.goal;
 
-import babydontherdme.Herding;
 import babydontherdme.access.WolfEntityMixinInterface;
 import babydontherdme.advancement.criterion.ModCriteria;
 import babydontherdme.math.SheepHelper;
@@ -21,19 +20,22 @@ public class WolfHerdingGoal extends Goal {
     //TODO Co-op herding
 
     //TODO moving herd's CoM
-
+    //Sheep Acquisition
     private final WolfEntity dog;
     private List<SheepEntity> sheepList;
-    private SheepEntity outer1;
-    private SheepEntity outer2;
-    private int aquiringNewTicks;
-    private double ACCEPTABLE_SPREAD = 1.0;
-
     private static final double VISION_RANGE = 30.0;
+
+    //Action cooldowns
+    private int acquireCooldown;
+    private static final int ACQUIRE_COOLDOWN = 100;
+    private int barkCooldown;
+    private static final int BARK_COOLDOWN = 8;
+
+    //Movement parameters
     private static final double herdingSpeed = 1.2;
     private static final double CIRCLE_TOLERANCE = 1.5;
+    private static final double BARK_ANGLE = Math.PI/180 * 5;
     private static final double SPACING = 0.9* FlockHerdingGoal.WOLF_VISION_RANGE;
-    private static final int checkEvery = 8;
 
     public WolfHerdingGoal(WolfEntity dog){
         this.dog = dog;
@@ -45,25 +47,29 @@ public class WolfHerdingGoal extends Goal {
     }
 
     public void start(){
-        updateSheep();
-        this.aquiringNewTicks = checkEvery;
+        this.sheepList = getNearbySheep(VISION_RANGE);
+        this.acquireCooldown = ACQUIRE_COOLDOWN;
+        this.barkCooldown = BARK_COOLDOWN;
     }
     public void stop(){
+        this.dog.playSound(SoundEvents.ENTITY_WOLF_PANT, 1.3f, 1.0f);
         ((Herding)this.dog).setScary(false);
-        this.dog.playSound(SoundEvents.ENTITY_WOLF_PANT, 1.2f, 1.0f);
     }
 
     public void tick() {
-        if(this.aquiringNewTicks<=0){
-            if (!getNearbySheep(3).isEmpty() && ((Herding)this.dog).isScary() && Random.create().nextInt(10) > 3) {
+        if(this.barkCooldown<=0){
+            if (((Herding)this.dog).isScary() && Random.create().nextInt(10) > 2) {
                 this.dog.playSound(SoundEvents.ENTITY_WOLF_AMBIENT, 1.2f, 1.0f);
             }
-            updateSheep();
-            this.aquiringNewTicks=checkEvery;
+            this.barkCooldown=BARK_COOLDOWN;
         }
-        this.aquiringNewTicks--;
-        if(sheepList.size() > 1){
+        this.barkCooldown--;
+        if(this.acquireCooldown == 0){
+            this.sheepList = getNearbySheep(VISION_RANGE);
+            this.acquireCooldown=ACQUIRE_COOLDOWN;
+        }
 
+        if(sheepList.size() > 1){
             //Sheep Protection Mechanic Test
             /*for(SheepEntity sheep : sheepList){
                 if(sheep.getAttacker()!=null&&sheep.getAttacker().equals(this.dog.getOwner())){
@@ -71,32 +77,47 @@ public class WolfHerdingGoal extends Goal {
                     break;
                 }
             }*/
-            this.dog.lookAtEntity(outer1,0.0f,0.0f);
+            ModCriteria.HERDED_ANIMALS_WITH_WOLF.trigger((ServerPlayerEntity) this.dog.getOwner(), sheepList.size());
+            SheepEntity outer = SheepHelper.furthestAnimal(sheepList);
+            double acceptableSpread = 1.0+Math.sqrt(sheepList.size());
+            this.dog.lookAtEntity(outer,0.0f,0.0f);
 
-            Vec3d circleCenter = outer1.getPos().add(outer2.getPos()).multiply(0.5);
-            double circleRadius = outer1.distanceTo(outer2)/2.0;
+            Vec3d circleCenter = SheepHelper.CenterOfMass(sheepList);
+            double circleRadius = Math.sqrt(outer.squaredDistanceTo(circleCenter));
 
             //Math basics for setting up herd system
             Vec3d radialUnitVector = this.dog.getPos().subtract(circleCenter).normalize();
-            Vec3d furthestUnitVector = outer1.getPos().subtract(circleCenter).normalize();
-            Vec3d normalUnitVector = radialUnitVector.crossProduct(furthestUnitVector);
-            double dogAngle = Math.acos(radialUnitVector.dotProduct(furthestUnitVector));
+            Vec3d furthestUnitVector = outer.getPos().subtract(circleCenter).normalize();
+            boolean dogLinedUp = BARK_ANGLE*BARK_ANGLE > 2-2*furthestUnitVector.dotProduct(radialUnitVector);
 
             //actual movement
             Vec3d target = dog.getPos();
             double speed = herdingSpeed;
-            if(circleRadius > ACCEPTABLE_SPREAD){
-                if(!dogOnCircle(circleCenter, circleRadius + SPACING)){
-                    ((Herding)this.dog).setScary(false);
-                    target = circleCenter.add(radialUnitVector.multiply(circleRadius+SPACING));
-                } else if(dogOnCircle(circleCenter,circleRadius + SPACING) && dogAngle < 2.0/circleRadius) {
+            if(circleRadius > acceptableSpread*Math.sqrt(sheepList.size())){
+                if(dogOnCircle(circleCenter,circleRadius + SPACING) && dogLinedUp) {
                     ((Herding)this.dog).setScary(true);
                     target = circleCenter.subtract(radialUnitVector.multiply(circleRadius + SPACING));
                     speed = herdingSpeed*0.8;
                 } else {
-                    ((Herding)this.dog).setScary(true);
-                    boolean shouldDecreaseAngle = dogAngle < Math.PI*2/3.0;
-                    target = this.dog.getPos().add(radialUnitVector.multiply(circleRadius).crossProduct(normalUnitVector.multiply(shouldDecreaseAngle ? -1.0 : 1.0)));
+                    ((Herding)this.dog).setScary(false);
+                    target = circleCenter.add(furthestUnitVector.multiply(circleRadius+SPACING));
+                    List<SheepEntity> closeSheep = getNearbySheep(FlockHerdingGoal.WOLF_VISION_RANGE+0.5);
+                    if(!closeSheep.isEmpty()){closeSheep.remove(outer);}
+                    if(!closeSheep.isEmpty()){
+                        Vec3d localCoM = SheepHelper.CenterOfMass(closeSheep);
+                        Vec3d furthestLocalUnit = outer.getPos().subtract(localCoM).normalize();
+                        Vec3d dogLocalUnit = this.dog.getPos().subtract(localCoM).normalize();
+                        double localAngleRepr = furthestLocalUnit.dotProduct(dogLocalUnit);
+                        boolean shouldWalkAround = localAngleRepr < 0.5 && localAngleRepr > -0.2 && closeSheep.size() < 3;
+                        if(shouldWalkAround){
+                            ((Herding)this.dog).setScary(true);
+                            Vec3d localNormal = furthestLocalUnit.crossProduct(dogLocalUnit).normalize();
+                            boolean counterclockwise = localNormal.dotProduct(new Vec3d(0,1,0)) < 0;
+                            Vec3d circular = dogLocalUnit.crossProduct(new Vec3d(0,1,0));
+                            if(counterclockwise){circular=circular.multiply(-1);}
+                            target = dogLocalUnit.multiply(FlockHerdingGoal.WOLF_VISION_RANGE+0.5).add(circular);
+                        }
+                    }
                 }
             }
             this.dog.getNavigation().startMovingTo(target.getX(), target.getY(), target.getZ(), speed);
@@ -107,18 +128,7 @@ public class WolfHerdingGoal extends Goal {
         return this.dog.getWorld().getEntitiesByClass(SheepEntity.class,
                 dog.getBoundingBox().expand(range,4,range), EntityPredicates.VALID_ENTITY);
     }
-
-    private void updateSheep(){
-        List<SheepEntity> sheep = getNearbySheep(VISION_RANGE);
-        this.sheepList = sheep;
-        ModCriteria.HERDED_ANIMALS_WITH_WOLF.trigger((ServerPlayerEntity) this.dog.getOwner(), sheep.size());
-        if(sheep.size() > 1){
-            this.outer1 = SheepHelper.furthestAnimal(sheep);
-            this.outer2 = SheepHelper.furthestFromThis(sheep, outer1);
-            this.ACCEPTABLE_SPREAD = 1.0+Math.sqrt(sheep.size());
-        }
-    }
-
+    
     private boolean dogOnCircle(Vec3d circleCenter, double radius){
         double dogDistance = Math.sqrt(this.dog.squaredDistanceTo(circleCenter));
         return Math.abs(dogDistance-radius) < CIRCLE_TOLERANCE;

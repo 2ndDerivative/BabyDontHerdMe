@@ -1,11 +1,9 @@
 package babydontherdme.entity.ai.goal;
 
-import babydontherdme.Herding;
 import babydontherdme.math.SheepHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.passive.SheepEntity;
-import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.util.math.Vec3d;
 
@@ -48,7 +46,7 @@ public class FlockHerdingGoal extends Goal {
         Vec3d sheepPos = this.mob.getPos();
         Vec3d separation = sheepPos.subtract(dogCenter);
         double sepD = separation.length();
-        separation = separation.multiply(Math.max(1.0,Math.min(WOLF_VISION_RANGE/(sepD*sepD),1.4)));
+        separation = separation.multiply(Math.max(1.0,Math.min(WOLF_VISION_RANGE/(sepD*sepD),1.3)));
         List<SheepEntity> sheepList = nearbySheep();
         int sheepCount = sheepList.size();
         Vec3d comseparation = SheepHelper.CenterOfMass(nearbySheep()).subtract(sheepPos).multiply(sheepCount*COHESION);
