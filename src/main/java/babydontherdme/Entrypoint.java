@@ -1,6 +1,7 @@
 package babydontherdme;
 
 import babydontherdme.access.WolfEntityMixinInterface;
+import babydontherdme.advancement.criterion.ModCriteria;
 import babydontherdme.item.ModItems;
 import babydontherdme.sound.ModSoundEvents;
 import babydontherdme.world.event.ModGameEvent;
@@ -28,6 +29,7 @@ public class Entrypoint implements ModInitializer {
 		ModItems.initialize();
 		ModSoundEvents.initialize();
 		ModGameEvent.initialize();
+		ModCriteria.initialize();
 		ServerPlayNetworking.registerGlobalReceiver(WHISTLE_PACKET,
 				(server, player,handler,buf,response)->server.execute(()->{
 					player.emitGameEvent(ModGameEvent.PLAYER_WHISTLE);

@@ -1,11 +1,13 @@
 package babydontherdme.entity.ai.goal;
 
 import babydontherdme.access.WolfEntityMixinInterface;
+import babydontherdme.advancement.criterion.ModCriteria;
 import babydontherdme.math.SheepHelper;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.predicate.entity.EntityPredicates;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
@@ -75,6 +77,7 @@ public class WolfHerdingGoal extends Goal {
                     break;
                 }
             }*/
+            ModCriteria.HERDED_ANIMALS_WITH_WOLF.trigger((ServerPlayerEntity) this.dog.getOwner(), sheepList.size());
             SheepEntity outer = SheepHelper.furthestAnimal(sheepList);
             double acceptableSpread = 1.0+Math.sqrt(sheepList.size());
             this.dog.lookAtEntity(outer,0.0f,0.0f);
@@ -125,7 +128,7 @@ public class WolfHerdingGoal extends Goal {
         return this.dog.getWorld().getEntitiesByClass(SheepEntity.class,
                 dog.getBoundingBox().expand(range,4,range), EntityPredicates.VALID_ENTITY);
     }
-
+    
     private boolean dogOnCircle(Vec3d circleCenter, double radius){
         double dogDistance = Math.sqrt(this.dog.squaredDistanceTo(circleCenter));
         return Math.abs(dogDistance-radius) < CIRCLE_TOLERANCE;

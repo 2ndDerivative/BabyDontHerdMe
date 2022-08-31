@@ -1,15 +1,13 @@
 {
   "parent": "minecraft:husbandry/tame_an_animal",
   "criteria": {
-    "used_horn": {
+    "herded_10": {
       "conditions": {
-        "items": [
-          {
-            "item": "minecraft:goat_horn"
-          }
-        ]
+        "number": {
+          "min": 10
+        }
       },
-      "trigger": "minecraft:using_item"
+      "trigger": "baby_dont_herd_me:herded_animals"
     }
   },
   "display": {
@@ -20,7 +18,7 @@
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "minecraft:goat_horn"
+      "item": "baby_dont_herd_me:crook"
     },
     "show_toast": true,
     "title": {
@@ -29,7 +27,7 @@
   },
   "requirements": [
     [
-      "used_horn"
+      "herded_10"
     ]
   ]
 }
