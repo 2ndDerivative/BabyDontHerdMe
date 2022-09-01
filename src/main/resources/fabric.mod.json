@@ -9,7 +9,7 @@
     "2ndDerivative"
   ],
 
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/baby_dont_herd_me/icon.png",
 
   "environment": "*",
