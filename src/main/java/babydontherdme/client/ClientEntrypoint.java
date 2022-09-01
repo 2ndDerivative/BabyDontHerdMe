@@ -1,19 +1,27 @@
 package babydontherdme.client;
 
 import babydontherdme.Entrypoint;
+import babydontherdme.client.render.entity.HighlandCowEntityRenderer;
+import babydontherdme.client.render.entity.model.HighlandCowEntityModel;
+import babydontherdme.entity.ModEntityType;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
 
+import static babydontherdme.client.render.entity.model.ModEntityModelLayers.HIGHLAND_COW_LAYER;
+
 public class ClientEntrypoint implements ClientModInitializer {
     private KeyBinding whistle;
     private boolean pressedBefore = false;
     private int whistleCooldown = 0;
+
     @Override
     public void onInitializeClient() {
         whistle = KeyBindingHelper.registerKeyBinding(new KeyBinding(
@@ -35,5 +43,7 @@ public class ClientEntrypoint implements ClientModInitializer {
                 --this.whistleCooldown;
             }
         });
+        EntityRendererRegistry.register(ModEntityType.HIGHLAND_COW, HighlandCowEntityRenderer::new);
+        EntityModelLayerRegistry.registerModelLayer(HIGHLAND_COW_LAYER, HighlandCowEntityModel::getTexturedModelData);
     }
 }

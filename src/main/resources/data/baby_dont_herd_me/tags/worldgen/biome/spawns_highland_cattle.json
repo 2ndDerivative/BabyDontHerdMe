@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:is_mountain",
+    "#minecraft:is_taiga",
+    "minecraft:snowy_plains",
+    "minecraft:grove",
+    "#minecraft:is_hill"
+  ]
+}

@@ -2,11 +2,16 @@ package babydontherdme;
 
 import babydontherdme.access.WolfEntityMixinInterface;
 import babydontherdme.advancement.criterion.ModCriteria;
+import babydontherdme.entity.ModEntityType;
 import babydontherdme.item.ModItems;
 import babydontherdme.sound.ModSoundEvents;
+import babydontherdme.tag.ModBiomeTags;
 import babydontherdme.world.event.ModGameEvent;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
@@ -30,6 +35,8 @@ public class Entrypoint implements ModInitializer {
 		ModSoundEvents.initialize();
 		ModGameEvent.initialize();
 		ModCriteria.initialize();
+		ModEntityType.initialize();
+		ModBiomeTags.initialize();
 		ServerPlayNetworking.registerGlobalReceiver(WHISTLE_PACKET,
 				(server, player,handler,buf,response)->server.execute(()->{
 					player.emitGameEvent(ModGameEvent.PLAYER_WHISTLE);
@@ -41,6 +48,7 @@ public class Entrypoint implements ModInitializer {
 						((WolfEntityMixinInterface) dog).setHerdingTime(0);
 					}
 				}));
+		BiomeModifications.addSpawn(BiomeSelectors.tag(ModBiomeTags.SPAWNS_HIGHLAND_CATTLE), SpawnGroup.CREATURE, ModEntityType.HIGHLAND_COW, 10, 1, 3);
 	}
 	public static Identifier identify(String id){
 		return new Identifier(MODID + ":" + id);
