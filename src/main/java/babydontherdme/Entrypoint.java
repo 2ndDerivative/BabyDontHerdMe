@@ -2,6 +2,7 @@ package babydontherdme;
 
 import babydontherdme.access.WolfEntityMixinInterface;
 import babydontherdme.advancement.criterion.ModCriteria;
+import babydontherdme.block.ModBlocks;
 import babydontherdme.item.ModItems;
 import babydontherdme.sound.ModSoundEvents;
 import babydontherdme.world.event.ModGameEvent;
@@ -27,6 +28,7 @@ public class Entrypoint implements ModInitializer {
 	public void onInitialize() {
 		LOGGER.info("What is love?");
 		ModItems.initialize();
+		ModBlocks.initialize();
 		ModSoundEvents.initialize();
 		ModGameEvent.initialize();
 		ModCriteria.initialize();
