@@ -15,6 +15,7 @@ public class HighlandCowEntityRenderer extends MobEntityRenderer<HighlandCowEnti
     public static final Identifier TEXTURE = Entrypoint.identify("textures/entity/cow/highland_cow.png");
     public HighlandCowEntityRenderer(EntityRendererFactory.Context context) {
         super(context, new HighlandCowEntityModel<>(context.getPart(ModEntityModelLayers.HIGHLAND_COW_LAYER)),0.7F);
+        this.addFeature(new HighlandCowWoolFeatureRenderer(this, context.getModelLoader()));
     }
     public Identifier getTexture(HighlandCowEntity entity) {
         return TEXTURE;

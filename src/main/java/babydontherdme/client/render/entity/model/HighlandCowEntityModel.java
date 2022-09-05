@@ -1,13 +1,14 @@
 package babydontherdme.client.render.entity.model;
 
+import babydontherdme.entity.animal.HighlandCowEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.entity.model.QuadrupedEntityModel;
-import net.minecraft.entity.Entity;
 
 @Environment(EnvType.CLIENT)
-public class HighlandCowEntityModel<T extends Entity> extends QuadrupedEntityModel<T> {
+public class HighlandCowEntityModel<T extends HighlandCowEntity> extends QuadrupedEntityModel<T> {
+    private float headPitchModifier;
     public HighlandCowEntityModel(ModelPart root) {
         super(root, false, 10.0F, 4.0F, 2.0F, 2.0F, 24);
     }
@@ -23,5 +24,15 @@ public class HighlandCowEntityModel<T extends Entity> extends QuadrupedEntityMod
         modelPartData.addChild("right_front_leg", modelPartBuilder, ModelTransform.pivot(-4.0F, 12.0F, -6.0F));
         modelPartData.addChild("left_front_leg", modelPartBuilder, ModelTransform.pivot(4.0F, 12.0F, -6.0F));
         return TexturedModelData.of(modelData, 64, 32);
+    }
+    public void animateModel(T highlandCowEntity, float f, float g, float h) {
+        super.animateModel(highlandCowEntity, f, g, h);
+        this.head.pivotY = 6.0F + highlandCowEntity.getNeckAngle(h) * 9.0F;
+        this.headPitchModifier = highlandCowEntity.getHeadAngle(h);
+    }
+
+    public void setAngles(T sheepEntity, float f, float g, float h, float i, float j) {
+        super.setAngles(sheepEntity, f, g, h, i, j);
+        this.head.pitch = this.headPitchModifier;
     }
 }

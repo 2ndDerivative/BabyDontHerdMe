@@ -30,8 +30,8 @@ public class HighlandCowWoolEntityModel<T extends HighlandCowEntity> extends Qua
         this.headAngle = highlandCowEntity.getHeadAngle(h);
     }
 
-    public void setAngles(T sheepEntity, float f, float g, float h, float i, float j) {
-        super.setAngles(sheepEntity, f, g, h, i, j);
+    public void setAngles(T highlandCowEntity, float f, float g, float h, float i, float j) {
+        super.setAngles(highlandCowEntity, f, g, h, i, j);
         this.head.pitch = this.headAngle;
     }
 }
