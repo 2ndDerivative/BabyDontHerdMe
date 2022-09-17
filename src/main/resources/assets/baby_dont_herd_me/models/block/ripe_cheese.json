@@ -1,0 +1,21 @@
+{
+  "textures": {
+    "particle": "baby_dont_herd_me:block/ripe_cheese_side",
+    "bottom": "baby_dont_herd_me:block/ripe_cheese_bottom",
+    "top": "baby_dont_herd_me:block/ripe_cheese_top",
+    "side": "baby_dont_herd_me:block/ripe_cheese_side"
+  },
+  "elements": [
+    {   "from": [ 1, 0, 1 ],
+      "to": [ 15, 8, 15 ],
+      "faces": {
+        "down":  { "texture": "#bottom", "cullface": "down" },
+        "up":    { "texture": "#top" },
+        "north": { "texture": "#side" },
+        "south": { "texture": "#side" },
+        "west":  { "texture": "#side" },
+        "east":  { "texture": "#side" }
+      }
+    }
+  ]
+}

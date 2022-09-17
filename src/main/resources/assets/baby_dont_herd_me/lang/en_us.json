@@ -3,6 +3,13 @@
     "item.baby_dont_herd_me.music_disc_sheep": "Music Disc",
     "item.baby_dont_herd_me.music_disc_sheep.desc": "Beep Beep I'm a Sheep - LilDeuceDeuce",
 
+    "block.baby_dont_herd_me.raw_cheese": "Raw Cheese",
+    "block.baby_dont_herd_me.slightly_aged_cheese": "Slightly Aged Cheese",
+    "block.baby_dont_herd_me.aged_cheese": "Aged Cheese",
+    "block.baby_dont_herd_me.ripe_cheese": "Ripe Cheese",
+
+    "item.baby_dont_herd_me.cheese_slice": "Cheese Slice",
+
     "key.baby_dont_herd_me.whistle": "Whistle",
     "category.baby_dont_herd_me.herding": "Herding",
 

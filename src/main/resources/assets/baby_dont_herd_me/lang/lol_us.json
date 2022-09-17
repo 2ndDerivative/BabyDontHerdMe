@@ -5,6 +5,13 @@
   "key.baby_dont_herd_me.whistle": "LOUD BRETH",
   "category.baby_dont_herd_me.herding": "Aminels",
 
+  "block.baby_dont_herd_me.raw_cheese": "Ro stinky",
+  "block.baby_dont_herd_me.slightly_aged_cheese": "stinkier stinky",
+  "block.baby_dont_herd_me.aged_cheese": "very stinky stinky",
+  "block.baby_dont_herd_me.ripe_cheese": "STINKY STINKY",
+
+  "item.baby_dont_herd_me.cheese_slice": "slim stinky",
+
   "subtitles.baby_dont_herd_me.whistle": "Dood feeps",
 
   "advancements.husbandry.herd_with_wolf.description": "maek 10 flufs kudl with BARKO",

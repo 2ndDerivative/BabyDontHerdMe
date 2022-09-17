@@ -8,7 +8,8 @@
     "PlayerEntityMixin",
     "SheepEntityMixin",
     "WolfEntityMixin",
-    "invoker.MusicDiscItemMixin"
+    "invoker.MusicDiscItemMixin",
+    "CowEntityMixin"
   ],
   "client": [
   ],

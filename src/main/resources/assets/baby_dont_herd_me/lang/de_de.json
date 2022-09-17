@@ -2,6 +2,13 @@
   "item.baby_dont_herd_me.crook": "Hirtenstock",
   "item.baby_dont_herd_me.music_disc_sheep": "Schallplatte",
 
+  "block.baby_dont_herd_me.raw_cheese": "Roher Käse",
+  "block.baby_dont_herd_me.slightly_aged_cheese": "Leicht gealterter Käse",
+  "block.baby_dont_herd_me.aged_cheese": "Gealterter Käse",
+  "block.baby_dont_herd_me.ripe_cheese": "Reifer Käse",
+
+  "item.baby_dont_herd_me.cheese_slice": "Käsescheibe",
+
   "key.baby_dont_herd_me.whistle": "Pfeifen",
   "category.baby_dont_herd_me.herding": "Hut",
 
