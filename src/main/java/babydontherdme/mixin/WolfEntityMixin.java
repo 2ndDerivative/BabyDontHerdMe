@@ -41,7 +41,7 @@ public class WolfEntityMixin extends TameableEntity implements WolfEntityMixinIn
     @Nullable
     @Override
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-        return null;
+        return ((WolfEntity)(Object)this).createChild(world, entity);
     }
 
     @Inject(method = "initDataTracker()V", at = @At(value = "RETURN"))
