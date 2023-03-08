@@ -1,0 +1,13 @@
+{
+    "item.baby_dont_herd_me.crook": "Crosse",
+    "item.baby_dont_herd_me.music_disc_sheep": "Disque",
+    "item.baby_dont_herd_me.music_disc_sheep.desc": "Beep Beep I'm a Sheep - LilDeuceDeuce",
+
+    "key.baby_dont_herd_me.whistle": "Siffler",
+    "category.baby_dont_herd_me.herding": "Rassembler",
+
+    "subtitles.baby_dont_herd_me.whistle": "Sifflets des joueurs",
+
+    "advancements.husbandry.herd_with_wolf.description": "Garder 10 moutons avec un chien",
+    "advancements.husbandry.herd_with_wolf.title": "Venez mes petits !"
+}
