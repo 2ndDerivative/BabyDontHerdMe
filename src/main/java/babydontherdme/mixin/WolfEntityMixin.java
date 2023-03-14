@@ -13,6 +13,7 @@ import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.world.EntityView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(WolfEntity.class)
-public class WolfEntityMixin extends TameableEntity implements WolfEntityMixinInterface, Herding {
+abstract public class WolfEntityMixin extends TameableEntity implements WolfEntityMixinInterface, Herding {
     private static final TrackedData<Integer> dontherdme$HerdingTime = DataTracker.registerData(WolfEntity.class, TrackedDataHandlerRegistry.INTEGER);
     private static final TrackedData<Boolean> dontherdme$isScary = DataTracker.registerData(WolfEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
