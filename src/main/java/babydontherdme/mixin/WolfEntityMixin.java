@@ -13,6 +13,7 @@ import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.world.EntityView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -68,5 +69,9 @@ public class WolfEntityMixin extends TameableEntity implements WolfEntityMixinIn
             ((WolfEntityMixinInterface)this).setHerdingTime(herdingTime-1);
         }
         //this.setCustomName(Text.of(String.valueOf(herdingTime)));
+    }
+    @Override
+    public EntityView method_48926() {
+        return this.getWorld();
     }
 }

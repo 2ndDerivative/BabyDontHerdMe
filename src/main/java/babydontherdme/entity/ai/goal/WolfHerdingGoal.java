@@ -125,7 +125,7 @@ public class WolfHerdingGoal extends Goal {
     }
 
     private List<SheepEntity> getNearbySheep(double range){
-        return this.dog.getWorld().getEntitiesByClass(SheepEntity.class,
+        return this.dog.method_48926().getEntitiesByClass(SheepEntity.class,
                 dog.getBoundingBox().expand(range,4,range), EntityPredicates.VALID_ENTITY);
     }
     

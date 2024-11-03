@@ -7,7 +7,7 @@ import net.minecraft.advancement.criterion.AbstractCriterionConditions;
 import net.minecraft.predicate.NumberRange;
 import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
 import net.minecraft.predicate.entity.AdvancementEntityPredicateSerializer;
-import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
@@ -16,7 +16,7 @@ public class HerdingWolfCriterion extends AbstractCriterion<HerdingWolfCriterion
 
     public HerdingWolfCriterion(){}
 
-    public HerdingWolfCriterion.Conditions conditionsFromJson(JsonObject jsonObject, EntityPredicate.Extended extended, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
+    public HerdingWolfCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate extended, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
         NumberRange.IntRange intRange = NumberRange.IntRange.fromJson(jsonObject.get("number"));
         return new HerdingWolfCriterion.Conditions(extended, intRange);
     }
@@ -29,7 +29,7 @@ public class HerdingWolfCriterion extends AbstractCriterion<HerdingWolfCriterion
     public static class Conditions extends AbstractCriterionConditions {
         private final NumberRange.IntRange number;
 
-        public Conditions(EntityPredicate.Extended player, NumberRange.IntRange intRange) {
+        public Conditions(LootContextPredicate player, NumberRange.IntRange intRange) {
             super(ID, player);
             this.number = intRange;
         }
