@@ -3,24 +3,21 @@
   "criteria": {
     "herded_10": {
       "conditions": {
-        "number": {
+        "sheepCount": {
           "min": 10
         }
       },
-      "trigger": "baby_dont_herd_me:herded_animals"
+      "trigger": "baby_dont_herd_me:herded_animals_with_wolf"
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancements.husbandry.herd_with_wolf.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
-      "item": "baby_dont_herd_me:crook"
+      "count": 1,
+      "id": "baby_dont_herd_me:crook"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancements.husbandry.herd_with_wolf.title"
     }
@@ -29,5 +26,6 @@
     [
       "herded_10"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

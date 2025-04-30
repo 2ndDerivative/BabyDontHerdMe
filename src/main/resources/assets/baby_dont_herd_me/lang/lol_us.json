@@ -1,8 +1,12 @@
 {
   "item.baby_dont_herd_me.crook": "Yoinker",
   "item.baby_dont_herd_me.music_disc_sheep": "Round loud thing",
+  "item.baby_dont_herd_me.music_disc_sheep.desc": "Beep Beep I'm a Sheep - LilDeuceDeuce",
 
-  "key.baby_dont_herd_me.whistle": "LOUD BRETH",
+  "jukebox_song.baby_dont_herd_me.sheep": "Beep Beep I'm a Sheep - LilDeuceDeuce",
+
+  "key.baby_dont_herd_me.recall": "DOGGY her",
+  "key.baby_dont_herd_me.go": "DOGGY awe",
   "category.baby_dont_herd_me.herding": "Aminels",
 
   "subtitles.baby_dont_herd_me.whistle": "Dood feeps",

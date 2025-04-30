@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "LXL",
+    "XDX",
+    "LXL"
+  ],
+  "key": {
+    "X": "minecraft:leather",
+    "L": "minecraft:black_wool",
+    "D": "minecraft:diamond"
+  },
+  "result": {
+    "count": 1,
+    "id": "baby_dont_herd_me:music_disc_sheep"
+  }
+}

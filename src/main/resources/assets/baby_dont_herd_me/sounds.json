@@ -1,16 +1,25 @@
 {
-    "music_disc_sheep": {
+    "sheep": {
         "sounds": [
             {
-                "name": "baby_dont_herd_me:music_disc/beep_beep",
+                "name": "baby_dont_herd_me:records/sheep",
                 "stream": true
             }
         ]
     },
-    "whistle": {
+    "recall": {
+        "subtitle": "subtitles.baby_dont_herd_me.recall",
         "sounds": [
             {
-                "name": "baby_dont_herd_me:player/whistle"
+                "name": "baby_dont_herd_me:player/recall"
+            }
+        ]
+    },
+    "go": {
+        "subtitle": "subtitles.baby_dont_herd_me.go",
+        "sounds": [
+            {
+                "name": "baby_dont_herd_me:player/go"
             }
         ]
     }

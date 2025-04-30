@@ -3,12 +3,12 @@ package babydontherdme.entity.ai.goal;
 import babydontherdme.access.WolfEntityMixinInterface;
 import babydontherdme.advancement.criterion.ModCriteria;
 import babydontherdme.math.SheepHelper;
+import babydontherdme.mixin.WolfEntitySoundVariantInvoker;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 
@@ -52,14 +52,14 @@ public class WolfHerdingGoal extends Goal {
         this.barkCooldown = BARK_COOLDOWN;
     }
     public void stop(){
-        this.dog.playSound(SoundEvents.ENTITY_WOLF_PANT, 1.3f, 1.0f);
+        this.dog.playSound(((WolfEntitySoundVariantInvoker)(Object) this.dog).invokeGetSoundVariant().value().pantSound().value(), 1.3f, 1.0f);
         ((Herding)this.dog).setScary(false);
     }
 
     public void tick() {
         if(this.barkCooldown<=0){
             if (((Herding)this.dog).isScary() && Random.create().nextInt(10) > 2) {
-                this.dog.playSound(SoundEvents.ENTITY_WOLF_AMBIENT, 1.2f, 1.0f);
+                this.dog.playSound(((WolfEntitySoundVariantInvoker) (Object) this.dog).invokeGetSoundVariant().value().ambientSound().value(), 1.2f, 1.0f);
             }
             this.barkCooldown=BARK_COOLDOWN;
         }
@@ -125,7 +125,7 @@ public class WolfHerdingGoal extends Goal {
     }
 
     private List<SheepEntity> getNearbySheep(double range){
-        return this.dog.method_48926().getEntitiesByClass(SheepEntity.class,
+        return this.dog.getWorld().getEntitiesByClass(SheepEntity.class,
                 dog.getBoundingBox().expand(range,4,range), EntityPredicates.VALID_ENTITY);
     }
     

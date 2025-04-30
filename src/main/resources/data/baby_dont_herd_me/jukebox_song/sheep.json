@@ -1,0 +1,8 @@
+{
+  "comparator_output": 15,
+  "description": {
+    "translate": "jukebox_song.baby_dont_herd_me.sheep"
+  },
+  "length_in_seconds": 130.0,
+  "sound_event": "baby_dont_herd_me:sheep"
+}

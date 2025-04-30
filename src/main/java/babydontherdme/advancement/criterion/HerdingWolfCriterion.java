@@ -1,45 +1,49 @@
 package babydontherdme.advancement.criterion;
 
-import babydontherdme.Entrypoint;
-import com.google.gson.JsonObject;
+import java.util.Optional;
+
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+
+import net.minecraft.advancement.AdvancementCriterion;
 import net.minecraft.advancement.criterion.AbstractCriterion;
-import net.minecraft.advancement.criterion.AbstractCriterionConditions;
 import net.minecraft.predicate.NumberRange;
-import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
-import net.minecraft.predicate.entity.AdvancementEntityPredicateSerializer;
+import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.Identifier;
 
 public class HerdingWolfCriterion extends AbstractCriterion<HerdingWolfCriterion.Conditions> {
-    public static final Identifier ID = Entrypoint.identify("herded_animals");
-
-    public HerdingWolfCriterion(){}
-
-    public HerdingWolfCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate extended, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
-        NumberRange.IntRange intRange = NumberRange.IntRange.fromJson(jsonObject.get("number"));
-        return new HerdingWolfCriterion.Conditions(extended, intRange);
-    }
+    
     public void trigger(ServerPlayerEntity player, int number){
-        this.trigger(player, (conditions) -> conditions.inRange(number));
+        this.trigger(player, conditions -> conditions.test(number));
     }
 
-    public Identifier getId(){return ID;}
+    public record Conditions(Optional<LootContextPredicate> player, NumberRange.IntRange sheepCount) implements AbstractCriterion.Conditions {
+        public static final Codec<HerdingWolfCriterion.Conditions> CODEC = RecordCodecBuilder.create(
+            instance -> instance.group(
+                EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC.optionalFieldOf("player").forGetter(HerdingWolfCriterion.Conditions::player),
+                NumberRange.IntRange.CODEC.optionalFieldOf("sheepCount", NumberRange.IntRange.ANY).forGetter(HerdingWolfCriterion.Conditions::sheepCount)
+            )
+            .apply(instance, HerdingWolfCriterion.Conditions::new)
+        );
 
-    public static class Conditions extends AbstractCriterionConditions {
-        private final NumberRange.IntRange number;
+        public static AdvancementCriterion<HerdingWolfCriterion.Conditions> create(
+            NumberRange.IntRange sheepRange
+        ) {
+            return ModCriteria.HERDED_ANIMALS_WITH_WOLF.create(new HerdingWolfCriterion.Conditions(Optional.empty(), sheepRange));
+        }
 
-        public Conditions(LootContextPredicate player, NumberRange.IntRange intRange) {
-            super(ID, player);
-            this.number = intRange;
+        public boolean test(int animals) {
+            return sheepCount.test(animals);
         }
-        public boolean inRange(int animals) {
-            return number.test(animals);
+        @Override
+        public Optional<LootContextPredicate> player() {
+            return player;
         }
-        public JsonObject toJson(AdvancementEntityPredicateSerializer predicateSerializer) {
-            JsonObject jsonObject = super.toJson(predicateSerializer);
-            jsonObject.add("number", this.number.toJson());
-            return jsonObject;
-        }
+    }
+
+    @Override
+    public Codec<Conditions> getConditionsCodec() {
+        return Conditions.CODEC;
     }
 }
