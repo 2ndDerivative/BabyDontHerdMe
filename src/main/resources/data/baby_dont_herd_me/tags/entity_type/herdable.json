@@ -3,6 +3,7 @@
     "values": [
         "minecraft:sheep",
         "minecraft:cow",
-        "minecraft:chicken"
+        "minecraft:chicken",
+        "minecraft:rabbit"
     ]
 }
