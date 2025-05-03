@@ -5,7 +5,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "PlayerEntityMixin",
-    "SheepEntityMixin",
+    "MobEntityMixin",
     "WolfEntityMixin",
     "WolfEntitySoundVariantInvoker"
   ],

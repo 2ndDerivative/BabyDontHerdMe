@@ -4,10 +4,10 @@ import babydontherdme.access.WolfEntityMixinInterface;
 import babydontherdme.advancement.criterion.ModCriteria;
 import babydontherdme.math.SheepHelper;
 import babydontherdme.mixin.WolfEntitySoundVariantInvoker;
+import babydontherdme.tag.ModEntityTypeTags;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.passive.SheepEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.WolfEntity;
-import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
@@ -22,7 +22,7 @@ public class WolfHerdingGoal extends Goal {
     //TODO moving herd's CoM
     //Sheep Acquisition
     private final WolfEntity dog;
-    private List<SheepEntity> sheepList;
+    private List<MobEntity> herdableList;
     private static final double VISION_RANGE = 30.0;
 
     //Action cooldowns
@@ -47,7 +47,7 @@ public class WolfHerdingGoal extends Goal {
     }
 
     public void start(){
-        this.sheepList = getNearbySheep(VISION_RANGE);
+        this.herdableList = getNearbyFlock(VISION_RANGE);
         this.acquireCooldown = ACQUIRE_COOLDOWN;
         this.barkCooldown = BARK_COOLDOWN;
     }
@@ -65,24 +65,17 @@ public class WolfHerdingGoal extends Goal {
         }
         this.barkCooldown--;
         if(this.acquireCooldown == 0){
-            this.sheepList = getNearbySheep(VISION_RANGE);
+            this.herdableList = getNearbyFlock(VISION_RANGE);
             this.acquireCooldown=ACQUIRE_COOLDOWN;
         }
 
-        if(sheepList.size() > 1){
-            //Sheep Protection Mechanic Test
-            /*for(SheepEntity sheep : sheepList){
-                if(sheep.getAttacker()!=null&&sheep.getAttacker().equals(this.dog.getOwner())){
-                    this.dog.setTarget(sheep.getAttacker());
-                    break;
-                }
-            }*/
-            ModCriteria.HERDED_ANIMALS_WITH_WOLF.trigger((ServerPlayerEntity) this.dog.getOwner(), sheepList.size());
-            SheepEntity outer = SheepHelper.furthestAnimal(sheepList);
-            double acceptableSpread = 1.0+Math.sqrt(sheepList.size());
+        if(herdableList.size() > 1){
+            ModCriteria.HERDED_ANIMALS_WITH_WOLF.trigger((ServerPlayerEntity) this.dog.getOwner(), herdableList.size());
+            MobEntity outer = SheepHelper.furthestAnimal(herdableList);
+            double acceptableSpread = 1.0+Math.sqrt(herdableList.size());
             this.dog.lookAtEntity(outer,0.0f,0.0f);
 
-            Vec3d circleCenter = SheepHelper.CenterOfMass(sheepList);
+            Vec3d circleCenter = SheepHelper.CenterOfMass(herdableList);
             double circleRadius = Math.sqrt(outer.squaredDistanceTo(circleCenter));
 
             //Math basics for setting up herd system
@@ -93,7 +86,7 @@ public class WolfHerdingGoal extends Goal {
             //actual movement
             Vec3d target = dog.getPos();
             double speed = herdingSpeed;
-            if(circleRadius > acceptableSpread*Math.sqrt(sheepList.size())){
+            if(circleRadius > acceptableSpread*Math.sqrt(herdableList.size())){
                 if(dogOnCircle(circleCenter,circleRadius + SPACING) && dogLinedUp) {
                     ((Herding)this.dog).setScary(true);
                     target = circleCenter.subtract(radialUnitVector.multiply(circleRadius + SPACING));
@@ -101,14 +94,14 @@ public class WolfHerdingGoal extends Goal {
                 } else {
                     ((Herding)this.dog).setScary(false);
                     target = circleCenter.add(furthestUnitVector.multiply(circleRadius+SPACING));
-                    List<SheepEntity> closeSheep = getNearbySheep(FlockHerdingGoal.WOLF_VISION_RANGE+0.5);
-                    if(!closeSheep.isEmpty()){closeSheep.remove(outer);}
-                    if(!closeSheep.isEmpty()){
-                        Vec3d localCoM = SheepHelper.CenterOfMass(closeSheep);
+                    List<MobEntity> closeHerdables = getNearbyFlock(FlockHerdingGoal.WOLF_VISION_RANGE+0.5);
+                    if(!closeHerdables.isEmpty()){closeHerdables.remove(outer);}
+                    if(!closeHerdables.isEmpty()){
+                        Vec3d localCoM = SheepHelper.CenterOfMass(closeHerdables);
                         Vec3d furthestLocalUnit = outer.getPos().subtract(localCoM).normalize();
                         Vec3d dogLocalUnit = this.dog.getPos().subtract(localCoM).normalize();
                         double localAngleRepr = furthestLocalUnit.dotProduct(dogLocalUnit);
-                        boolean shouldWalkAround = localAngleRepr < 0.5 && localAngleRepr > -0.2 && closeSheep.size() < 3;
+                        boolean shouldWalkAround = localAngleRepr < 0.5 && localAngleRepr > -0.2 && closeHerdables.size() < 3;
                         if(shouldWalkAround){
                             ((Herding)this.dog).setScary(true);
                             Vec3d localNormal = furthestLocalUnit.crossProduct(dogLocalUnit).normalize();
@@ -124,9 +117,10 @@ public class WolfHerdingGoal extends Goal {
         }
     }
 
-    private List<SheepEntity> getNearbySheep(double range){
-        return this.dog.getWorld().getEntitiesByClass(SheepEntity.class,
-                dog.getBoundingBox().expand(range,4,range), EntityPredicates.VALID_ENTITY);
+    private List<MobEntity> getNearbyFlock(double range){
+        return this.dog.getWorld().getEntitiesByClass(MobEntity.class,
+                dog.getBoundingBox().expand(range,4,range),
+                (e) -> (e.getType().isIn(ModEntityTypeTags.HERDABLE)));
     }
     
     private boolean dogOnCircle(Vec3d circleCenter, double radius){

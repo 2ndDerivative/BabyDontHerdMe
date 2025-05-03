@@ -5,6 +5,7 @@ import babydontherdme.advancement.criterion.ModCriteria;
 import babydontherdme.block.jukebox.ModJukeboxSongs;
 import babydontherdme.item.ModItems;
 import babydontherdme.sound.ModSoundEvents;
+import babydontherdme.tag.ModEntityTypeTags;
 import babydontherdme.whistle.GoPayload;
 import babydontherdme.whistle.RecallPayload;
 import babydontherdme.world.event.ModGameEvent;
@@ -42,6 +43,7 @@ public class BabyDontHerdMe implements ModInitializer {
 		ModSoundEvents.initialize();
 		ModGameEvent.initialize();
 		ModCriteria.initialize();
+		ModEntityTypeTags.initialize();
 		ModJukeboxSongs.initialize();
 		setWhistle(RecallPayload.ID, RecallPayload.CODEC, ModGameEvent.PLAYER_WHISTLE_RECALL, ModSoundEvents.RECALL, 0);
 		setWhistle(GoPayload.ID, GoPayload.CODEC, ModGameEvent.PLAYER_WHISTLE_GO, ModSoundEvents.GO_WHISTLE, 1200);

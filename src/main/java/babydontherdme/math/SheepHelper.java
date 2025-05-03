@@ -1,7 +1,6 @@
 package babydontherdme.math;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.List;
@@ -18,7 +17,7 @@ public class SheepHelper {
         }   else throw new RuntimeException("Illegal operation for zero-element List!");
     }
 
-    public static <T extends AnimalEntity> T furthestAnimal(List<T> animals){
+    public static <T extends LivingEntity> T furthestAnimal(List<T> animals){
         if(!animals.isEmpty()){
             Vec3d com = CenterOfMass(animals);
             double maxDistance = 0.0;
@@ -34,7 +33,7 @@ public class SheepHelper {
         }   else throw new RuntimeException("Illegal operation for zero-element List!");
     }
 
-    public static <T extends AnimalEntity> T furthestFromThis(List<T> animals, T subject){
+    public static <T extends LivingEntity> T furthestFromThis(List<T> animals, T subject){
         if(animals.size() > 1){
             if(!animals.remove(subject)) throw new RuntimeException("couldnt remove Entity");
             double maxDisSquared = 0.0;
