@@ -31,7 +31,7 @@ abstract public class MobEntityMixin extends LivingEntity {
         if (world instanceof ServerWorld) {
             Integer escapeDangerGoal = getEscapeDangerGoalIndex();
             if (this.getType().isIn(ModEntityTypeTags.HERDABLE) && escapeDangerGoal != null) {
-                this.goalSelector.add(getEscapeDangerGoalIndex(), new FlockHerdingGoal((MobEntity)(Object)this));
+                this.goalSelector.add(escapeDangerGoal, new FlockHerdingGoal((MobEntity)(Object)this));
             }
         }
     }
